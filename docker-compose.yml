@@ -1,0 +1,37 @@
+version: "3"
+services:
+  verdaccio:
+    container_name: verdaccio
+    image: verdaccio/verdaccio
+    environment:
+      - VERDACCIO_USER_NAME=gablab1234
+    ports:
+      - '4873:4873'
+    volumes:
+      - './verdaccio/storage:/verdaccio/storage'
+      - './verdaccio/conf:/verdaccio/conf'
+  swag:
+    image: ghcr.io/linuxserver/swag
+    container_name: v-delizie-swag
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - URL=cleverup.net
+      - SUBDOMAINS=lab
+      - VALIDATION=http
+      - DNSPLUGIN=cloudflare #optional
+      - EMAIL=mail.cleverup@gmail.com
+      - ONLY_SUBDOMAINS=true #optional
+      - STAGING=false #optional
+    volumes:
+      - ./swag:/config/nginx/site-confs
+    ports:
+      - 443:443
+      - 80:80 #optional
+
+volumes:
+  verdaccio:
+    driver: local
