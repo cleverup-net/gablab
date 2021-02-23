@@ -21,16 +21,24 @@ services:
     ports:
       - 443:443
       - 80:80 #optional
-  portainer:
-    image: portainer/portainer-ce
-    container_name: portainer
+  code-server:
+    image: ghcr.io/linuxserver/code-server
+    container_name: code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Rome
+      - PASSWORD=password #optional
+      - HASHED_PASSWORD= #optional
+      - SUDO_PASSWORD=password #optional
+      - SUDO_PASSWORD_HASH= #optional
+      - PROXY_DOMAIN=code-server.my.domain #optional
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
+      - /path/to/appdata/config:/config
     ports:
-      - 9000:9000
-    restart: always
+      - 8443:8443
+    restart: unless-stopped
 
 volumes:
-  portainer_data:
+  verdaccio:
     driver: local
