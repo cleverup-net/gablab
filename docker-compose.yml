@@ -2,7 +2,7 @@ version: "3"
 services:
   swag:
     image: ghcr.io/linuxserver/swag
-    container_name: v-delizie-swag
+    container_name: gablab-swag
     cap_add:
       - NET_ADMIN
     environment:
@@ -31,7 +31,6 @@ services:
       - TZ=Europe/Rome
       - PASSWORD=88Gab.12 #optional
       - SUDO_PASSWORD=88Gab.12 #optional
-      - PROXY_DOMAIN=lab.cleverup.net #optional
     volumes:
       - ./code-server:/config
     ports:
