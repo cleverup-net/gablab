@@ -31,7 +31,7 @@ services:
       - TZ=Europe/Rome
       - PASSWORD=88Gab.12 #optional
       - SUDO_PASSWORD=88Gab.12 #optional
-      - PROXY_DOMAIN=lab.cleverup.net #optional
+      # - PROXY_DOMAIN=lab.cleverup.net #optional
     volumes:
       - ./code-server:/config
     ports:
