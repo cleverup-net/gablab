@@ -15,14 +15,22 @@ server {
 	root /config/www;
 	index index.html index.htm index.php;
 
-	server_name lab.cleverup.net;
+	server_name lab.artcoded.net;
 
 	include /config/nginx/ssl.conf;
 
 	client_max_body_size 0;
 
-	location / {
-        proxy_pass http://code-server:8443/;
+	location /jenkins {
+        proxy_pass http://jenkins:8080/;
+				proxy_set_header Host $host;
+				proxy_set_header Upgrade $http_upgrade;
+				proxy_set_header Connection upgrade;
+				proxy_set_header Accept-Encoding gzip;
+	}
+
+	location /docker {
+        proxy_pass http://registry:5000/;
 				proxy_set_header Host $host;
 				proxy_set_header Upgrade $http_upgrade;
 				proxy_set_header Connection upgrade;

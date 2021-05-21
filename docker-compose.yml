@@ -9,11 +9,11 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Rome
-      - URL=cleverup.net
+      - URL=artcoded.net
       - SUBDOMAINS=lab
       - VALIDATION=http
       - DNSPLUGIN=cloudflare #optional
-      - EMAIL=mail.cleverup@gmail.com
+      - EMAIL=mail.artcoded@gmail.com
       - ONLY_SUBDOMAINS=true #optional
       - STAGING=false #optional
     volumes:
@@ -21,18 +21,21 @@ services:
     ports:
       - 443:443
       - 80:80 #optional
-
-  code-server:
-    image: ghcr.io/linuxserver/code-server
-    container_name: code-server
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Rome
-      - PASSWORD=88Gab.12 #optional
-      - SUDO_PASSWORD=88Gab.12 #optional
+    restart: unless-stopped
+  jenkins:
+    image: jenkins/jenkins
+    container_name: gablab-jenkins
+    ports:
+      - 8080:8080
+      - 50000:50000
     volumes:
-      - ./code-server:/config
-    # ports:
-    #   - 8443:8443
+      - ./jenkins:/var/jenkins_home
+    restart: unless-stopped
+  registry:
+    image: registry
+    container_name: gablab-docker
+    ports:
+      - 5000:5000
+    volumes:
+      - ./docker:/var/lib/registry
     restart: unless-stopped
